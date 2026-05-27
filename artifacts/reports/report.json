@@ -1,0 +1,238 @@
+{
+  "summary": {
+    "analyzed_at": "2026-05-27T07:07:57.844819+00:00",
+    "total_lines": 15,
+    "parsed_events": 15,
+    "failed_logins": 10,
+    "successful_logins": 2,
+    "invalid_users": 3,
+    "findings_count": 7,
+    "highest_severity": "critical"
+  },
+  "findings": [
+    {
+      "rule_id": "AUTH-003",
+      "title": "Successful login after repeated failures",
+      "severity": "critical",
+      "description": "User deploy had 4 failed attempts from 198.51.100.77 before a successful login.",
+      "source_ip": "198.51.100.77",
+      "username": "deploy",
+      "event_count": 5,
+      "evidence": [
+        "May 21 03:24:09 web-01 sshd[2130]: Failed password for deploy from 198.51.100.77 port 50101 ssh2",
+        "May 21 03:24:40 web-01 sshd[2131]: Failed password for deploy from 198.51.100.77 port 50102 ssh2",
+        "May 21 03:25:18 web-01 sshd[2132]: Failed password for deploy from 198.51.100.77 port 50103 ssh2",
+        "May 21 03:25:52 web-01 sshd[2133]: Failed password for deploy from 198.51.100.77 port 50104 ssh2",
+        "May 21 03:26:16 web-01 sshd[2134]: Accepted password for deploy from 198.51.100.77 port 50105 ssh2"
+      ]
+    },
+    {
+      "rule_id": "AUTH-001",
+      "title": "Possible SSH brute-force attack",
+      "severity": "high",
+      "description": "9 failed authentication attempts from 203.0.113.50 within 10 minutes.",
+      "source_ip": "203.0.113.50",
+      "username": "admin, oracle, root, test",
+      "event_count": 9,
+      "evidence": [
+        "May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101",
+        "May 21 02:10:25 web-01 sshd[2012]: Failed password for invalid user admin from 203.0.113.50 port 41101 ssh2",
+        "May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102",
+        "May 21 02:11:14 web-01 sshd[2014]: Failed password for invalid user test from 203.0.113.50 port 41102 ssh2",
+        "May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103",
+        "May 21 02:12:12 web-01 sshd[2016]: Failed password for invalid user oracle from 203.0.113.50 port 41103 ssh2",
+        "May 21 02:12:47 web-01 sshd[2017]: Failed password for root from 203.0.113.50 port 41104 ssh2",
+        "May 21 02:13:05 web-01 sshd[2018]: Failed password for root from 203.0.113.50 port 41105 ssh2"
+      ]
+    },
+    {
+      "rule_id": "AUTH-002",
+      "title": "Username enumeration or password spraying",
+      "severity": "medium",
+      "description": "203.0.113.50 attempted logins for 3 invalid usernames.",
+      "source_ip": "203.0.113.50",
+      "username": "admin, oracle, test",
+      "event_count": 3,
+      "evidence": [
+        "May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101",
+        "May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102",
+        "May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103"
+      ]
+    },
+    {
+      "rule_id": "AUTH-004",
+      "title": "Suspicious high-value username targeted",
+      "severity": "low",
+      "description": "The username 'admin' appeared in 2 authentication events.",
+      "source_ip": "203.0.113.50",
+      "username": "admin",
+      "event_count": 2,
+      "evidence": [
+        "May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101",
+        "May 21 02:10:25 web-01 sshd[2012]: Failed password for invalid user admin from 203.0.113.50 port 41101 ssh2"
+      ]
+    },
+    {
+      "rule_id": "AUTH-004",
+      "title": "Suspicious high-value username targeted",
+      "severity": "low",
+      "description": "The username 'test' appeared in 2 authentication events.",
+      "source_ip": "203.0.113.50",
+      "username": "test",
+      "event_count": 2,
+      "evidence": [
+        "May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102",
+        "May 21 02:11:14 web-01 sshd[2014]: Failed password for invalid user test from 203.0.113.50 port 41102 ssh2"
+      ]
+    },
+    {
+      "rule_id": "AUTH-004",
+      "title": "Suspicious high-value username targeted",
+      "severity": "low",
+      "description": "The username 'oracle' appeared in 2 authentication events.",
+      "source_ip": "203.0.113.50",
+      "username": "oracle",
+      "event_count": 2,
+      "evidence": [
+        "May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103",
+        "May 21 02:12:12 web-01 sshd[2016]: Failed password for invalid user oracle from 203.0.113.50 port 41103 ssh2"
+      ]
+    },
+    {
+      "rule_id": "AUTH-004",
+      "title": "Suspicious high-value username targeted",
+      "severity": "low",
+      "description": "The username 'root' appeared in 3 authentication events.",
+      "source_ip": "203.0.113.50",
+      "username": "root",
+      "event_count": 3,
+      "evidence": [
+        "May 21 02:12:47 web-01 sshd[2017]: Failed password for root from 203.0.113.50 port 41104 ssh2",
+        "May 21 02:13:05 web-01 sshd[2018]: Failed password for root from 203.0.113.50 port 41105 ssh2",
+        "May 21 02:13:42 web-01 sshd[2019]: Failed password for root from 203.0.113.50 port 41106 ssh2"
+      ]
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-05-21T02:10:01",
+      "event_type": "invalid_user",
+      "username": "admin",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101"
+    },
+    {
+      "timestamp": "2026-05-21T02:10:25",
+      "event_type": "failed_login",
+      "username": "admin",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:10:25 web-01 sshd[2012]: Failed password for invalid user admin from 203.0.113.50 port 41101 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T02:11:03",
+      "event_type": "invalid_user",
+      "username": "test",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102"
+    },
+    {
+      "timestamp": "2026-05-21T02:11:14",
+      "event_type": "failed_login",
+      "username": "test",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:11:14 web-01 sshd[2014]: Failed password for invalid user test from 203.0.113.50 port 41102 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T02:12:01",
+      "event_type": "invalid_user",
+      "username": "oracle",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103"
+    },
+    {
+      "timestamp": "2026-05-21T02:12:12",
+      "event_type": "failed_login",
+      "username": "oracle",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:12:12 web-01 sshd[2016]: Failed password for invalid user oracle from 203.0.113.50 port 41103 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T02:12:47",
+      "event_type": "failed_login",
+      "username": "root",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:12:47 web-01 sshd[2017]: Failed password for root from 203.0.113.50 port 41104 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T02:13:05",
+      "event_type": "failed_login",
+      "username": "root",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:13:05 web-01 sshd[2018]: Failed password for root from 203.0.113.50 port 41105 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T02:13:42",
+      "event_type": "failed_login",
+      "username": "root",
+      "source_ip": "203.0.113.50",
+      "service": "sshd",
+      "raw": "May 21 02:13:42 web-01 sshd[2019]: Failed password for root from 203.0.113.50 port 41106 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T03:24:09",
+      "event_type": "failed_login",
+      "username": "deploy",
+      "source_ip": "198.51.100.77",
+      "service": "sshd",
+      "raw": "May 21 03:24:09 web-01 sshd[2130]: Failed password for deploy from 198.51.100.77 port 50101 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T03:24:40",
+      "event_type": "failed_login",
+      "username": "deploy",
+      "source_ip": "198.51.100.77",
+      "service": "sshd",
+      "raw": "May 21 03:24:40 web-01 sshd[2131]: Failed password for deploy from 198.51.100.77 port 50102 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T03:25:18",
+      "event_type": "failed_login",
+      "username": "deploy",
+      "source_ip": "198.51.100.77",
+      "service": "sshd",
+      "raw": "May 21 03:25:18 web-01 sshd[2132]: Failed password for deploy from 198.51.100.77 port 50103 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T03:25:52",
+      "event_type": "failed_login",
+      "username": "deploy",
+      "source_ip": "198.51.100.77",
+      "service": "sshd",
+      "raw": "May 21 03:25:52 web-01 sshd[2133]: Failed password for deploy from 198.51.100.77 port 50104 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T03:26:16",
+      "event_type": "successful_login",
+      "username": "deploy",
+      "source_ip": "198.51.100.77",
+      "service": "sshd",
+      "raw": "May 21 03:26:16 web-01 sshd[2134]: Accepted password for deploy from 198.51.100.77 port 50105 ssh2"
+    },
+    {
+      "timestamp": "2026-05-21T09:00:01",
+      "event_type": "successful_login",
+      "username": "alina",
+      "source_ip": "10.0.0.15",
+      "service": "sshd",
+      "raw": "May 21 09:00:01 web-01 sshd[3001]: Accepted password for alina from 10.0.0.15 port 51222 ssh2"
+    }
+  ]
+}

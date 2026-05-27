@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LogWatch Threat Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; color: #1f2937; background: #f8fafc; }
+    h1, h2 { margin-bottom: 8px; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 20px 0; }
+    .metric { background: white; border: 1px solid #dbe3ef; border-radius: 8px; padding: 14px; }
+    .metric span { display: block; color: #64748b; font-size: 13px; }
+    .metric strong { display: block; font-size: 26px; margin-top: 4px; }
+    .finding { background: white; border-left: 6px solid #64748b; border-radius: 8px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); }
+    .critical { border-left-color: #991b1b; }
+    .high { border-left-color: #dc2626; }
+    .medium { border-left-color: #d97706; }
+    .low { border-left-color: #2563eb; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 999px; font-size: 12px; text-transform: uppercase; background: #e2e8f0; }
+    pre { white-space: pre-wrap; background: #0f172a; color: #e2e8f0; border-radius: 6px; padding: 12px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>LogWatch Threat Report</h1>
+  <p>Analyzed at 2026-05-27T07:07:57.844819+00:00</p>
+
+  <section class="summary">
+    <div class="metric"><span>Total lines</span><strong>15</strong></div>
+    <div class="metric"><span>Parsed events</span><strong>15</strong></div>
+    <div class="metric"><span>Failed logins</span><strong>10</strong></div>
+    <div class="metric"><span>Invalid users</span><strong>3</strong></div>
+    <div class="metric"><span>Findings</span><strong>7</strong></div>
+    <div class="metric"><span>Highest severity</span><strong>critical</strong></div>
+  </section>
+
+  <h2>Findings</h2>
+  
+    
+      <article class="finding critical">
+        <span class="badge">critical</span>
+        <h3>AUTH-003 - Successful login after repeated failures</h3>
+        <p>User deploy had 4 failed attempts from 198.51.100.77 before a successful login.</p>
+        <p><strong>Source IP:</strong> 198.51.100.77</p>
+        <p><strong>Username:</strong> deploy</p>
+        <p><strong>Events:</strong> 5</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 03:24:09 web-01 sshd[2130]: Failed password for deploy from 198.51.100.77 port 50101 ssh2
+May 21 03:24:40 web-01 sshd[2131]: Failed password for deploy from 198.51.100.77 port 50102 ssh2
+May 21 03:25:18 web-01 sshd[2132]: Failed password for deploy from 198.51.100.77 port 50103 ssh2
+May 21 03:25:52 web-01 sshd[2133]: Failed password for deploy from 198.51.100.77 port 50104 ssh2
+May 21 03:26:16 web-01 sshd[2134]: Accepted password for deploy from 198.51.100.77 port 50105 ssh2
+</pre>
+        
+      </article>
+    
+      <article class="finding high">
+        <span class="badge">high</span>
+        <h3>AUTH-001 - Possible SSH brute-force attack</h3>
+        <p>9 failed authentication attempts from 203.0.113.50 within 10 minutes.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> admin, oracle, root, test</p>
+        <p><strong>Events:</strong> 9</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101
+May 21 02:10:25 web-01 sshd[2012]: Failed password for invalid user admin from 203.0.113.50 port 41101 ssh2
+May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102
+May 21 02:11:14 web-01 sshd[2014]: Failed password for invalid user test from 203.0.113.50 port 41102 ssh2
+May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103
+May 21 02:12:12 web-01 sshd[2016]: Failed password for invalid user oracle from 203.0.113.50 port 41103 ssh2
+May 21 02:12:47 web-01 sshd[2017]: Failed password for root from 203.0.113.50 port 41104 ssh2
+May 21 02:13:05 web-01 sshd[2018]: Failed password for root from 203.0.113.50 port 41105 ssh2
+</pre>
+        
+      </article>
+    
+      <article class="finding medium">
+        <span class="badge">medium</span>
+        <h3>AUTH-002 - Username enumeration or password spraying</h3>
+        <p>203.0.113.50 attempted logins for 3 invalid usernames.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> admin, oracle, test</p>
+        <p><strong>Events:</strong> 3</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101
+May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102
+May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103
+</pre>
+        
+      </article>
+    
+      <article class="finding low">
+        <span class="badge">low</span>
+        <h3>AUTH-004 - Suspicious high-value username targeted</h3>
+        <p>The username 'admin' appeared in 2 authentication events.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> admin</p>
+        <p><strong>Events:</strong> 2</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:10:01 web-01 sshd[2011]: Invalid user admin from 203.0.113.50 port 41101
+May 21 02:10:25 web-01 sshd[2012]: Failed password for invalid user admin from 203.0.113.50 port 41101 ssh2
+</pre>
+        
+      </article>
+    
+      <article class="finding low">
+        <span class="badge">low</span>
+        <h3>AUTH-004 - Suspicious high-value username targeted</h3>
+        <p>The username 'test' appeared in 2 authentication events.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> test</p>
+        <p><strong>Events:</strong> 2</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:11:03 web-01 sshd[2013]: Invalid user test from 203.0.113.50 port 41102
+May 21 02:11:14 web-01 sshd[2014]: Failed password for invalid user test from 203.0.113.50 port 41102 ssh2
+</pre>
+        
+      </article>
+    
+      <article class="finding low">
+        <span class="badge">low</span>
+        <h3>AUTH-004 - Suspicious high-value username targeted</h3>
+        <p>The username 'oracle' appeared in 2 authentication events.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> oracle</p>
+        <p><strong>Events:</strong> 2</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:12:01 web-01 sshd[2015]: Invalid user oracle from 203.0.113.50 port 41103
+May 21 02:12:12 web-01 sshd[2016]: Failed password for invalid user oracle from 203.0.113.50 port 41103 ssh2
+</pre>
+        
+      </article>
+    
+      <article class="finding low">
+        <span class="badge">low</span>
+        <h3>AUTH-004 - Suspicious high-value username targeted</h3>
+        <p>The username 'root' appeared in 3 authentication events.</p>
+        <p><strong>Source IP:</strong> 203.0.113.50</p>
+        <p><strong>Username:</strong> root</p>
+        <p><strong>Events:</strong> 3</p>
+        
+          <h4>Evidence</h4>
+          <pre>May 21 02:12:47 web-01 sshd[2017]: Failed password for root from 203.0.113.50 port 41104 ssh2
+May 21 02:13:05 web-01 sshd[2018]: Failed password for root from 203.0.113.50 port 41105 ssh2
+May 21 02:13:42 web-01 sshd[2019]: Failed password for root from 203.0.113.50 port 41106 ssh2
+</pre>
+        
+      </article>
+    
+  
+</body>
+</html>
