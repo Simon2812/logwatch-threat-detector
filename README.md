@@ -2,7 +2,7 @@
 
 A lightweight cybersecurity log-analysis pipeline for detecting suspicious SSH authentication activity in Linux systems.
 
-The project parses authentication logs, identifies attack patterns such as brute-force attempts and invalid-user spraying, generates structured security findings, and exposes analysis through both CLI tools and a REST API built with FastAPI.
+It parses authentication logs, identifies attack patterns such as brute-force attempts and invalid-user spraying, generates structured security findings, and exposes analysis through both CLI tools and a REST API built with FastAPI.
 
 ---
 
