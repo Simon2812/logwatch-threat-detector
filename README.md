@@ -213,7 +213,3 @@ uvicorn logwatch.api.main:app --reload
 - Support for additional log formats
 
 ---
-
-## License
-
-MIT
