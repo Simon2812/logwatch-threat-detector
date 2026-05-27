@@ -1,0 +1,6 @@
+May 21 09:00:01 web-01 sshd[1011]: Accepted password for deploy from 10.0.0.12 port 51222 ssh2
+May 21 09:12:14 web-01 sshd[1033]: Failed password for deploy from 10.0.0.12 port 51241 ssh2
+May 21 09:12:30 web-01 sshd[1035]: Accepted password for deploy from 10.0.0.12 port 51242 ssh2
+May 21 10:03:20 web-01 sshd[1088]: Accepted password for alina from 10.0.0.15 port 51311 ssh2
+May 21 11:42:07 web-01 sshd[1198]: Failed password for backup from 10.0.0.20 port 52221 ssh2
+May 21 11:42:20 web-01 sshd[1201]: Accepted password for backup from 10.0.0.20 port 52222 ssh2
